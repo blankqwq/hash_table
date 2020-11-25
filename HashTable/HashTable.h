@@ -12,6 +12,7 @@ typedef struct {
 	int size;
 	int count;
 	ht_item** items;
+	int base_size;
 }ht_hash_table;
 
 void ht_insert(ht_hash_table* ht,const char* key,const char* value);
