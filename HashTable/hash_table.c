@@ -1,7 +1,7 @@
 ﻿// HashTable.cpp: 定义应用程序的入口点。
 //
 
-#include "HashTable.h"
+#include "hash_table.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
