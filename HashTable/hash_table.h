@@ -6,13 +6,20 @@
 typedef struct {
 	char* key;
 	char* value;
+	long int h;
 } ht_item;
 
 typedef struct {
 	int size;
 	int count;
 	ht_item** items;
+	int nTableMask;
 	int base_size;
+	int nTableSize;
+	int nNumUsed;
+	int nNumOfElements;
+	int nInternalPointer;
+	long int nNextFreeElement;
 }ht_hash_table;
 
 void ht_insert(ht_hash_table* ht,const char* key,const char* value);

@@ -6,12 +6,19 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define HT_PRIME_1 1
-#define HT_PRIME_2 2
+#define HT_PRIME_1 1113
+#define HT_PRIME_2 2225
 #define HT_INITAL_BASE_SIZE 10
+#define HT_INVALID_IDX -1
+#define HT_MIN_MASK -2
+
 
 static ht_item HT_DELETED_ITEM = { NULL,NULL };
 
+
+static int hash_check_size(int size) {
+	return size;
+}
 
 // 新创建一个基础数量size的hashTable
 static ht_hash_table* ht_new_sized(const int base_size) {
@@ -21,7 +28,14 @@ static ht_hash_table* ht_new_sized(const int base_size) {
 	}
 	ht->base_size = base_size;
 	ht->count = 0;
-	ht->items = calloc((size_t)ht->size, sizeof(ht_item*));
+	ht->nNumUsed = 0;
+	ht->nNumOfElements = 0;
+	ht->nNextFreeElement = 0;
+	ht->nTableSize = hash_check_size(base_size);
+	ht->nTableMask = HT_MIN_MASK;
+	ht->nInternalPointer = HT_INVALID_IDX;
+	// 初始化tableBucket
+	ht->items = calloc((size_t)ht->nTableSize, sizeof(ht_item*));
 	return ht;
 }
 
@@ -29,6 +43,7 @@ static ht_hash_table* ht_new_sized(const int base_size) {
 static void ht_del_item(ht_item* i) {
 	free(i->key);
 	free(i->value);
+	free(i->h);
 	free(i);
 }
 
